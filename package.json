@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/ZzZorger/movies-explorer-api#readme",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "celebrate": "^15.0.1",
     "eslint": "^8.28.0",
     "eslint-config-airbnb-base": "^15.0.0",
