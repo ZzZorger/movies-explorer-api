@@ -42,3 +42,19 @@ module.exports.logout = (req, res, next) => {
   res.clearCookie('token').send({ message: 'Выход' })
     .catch(next);
 };
+module.exports.getUserMe = (req, res, next) => {
+  User.findById(req.user._id)
+    .then((user) => {
+      const {
+        _id, name, email,
+      } = user;
+      if (user) {
+        res.status(200).send({
+          _id,
+          name,
+          email,
+        });
+      }
+    })
+    .catch((err) => next(err));
+};
