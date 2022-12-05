@@ -1,7 +1,7 @@
 const { celebrate, Joi } = require('celebrate');
 const router = require('express').Router();
 const {
-  getMovies, postMovie,
+  getMovies, postMovie, deleteMovie,
 } = require('../controllers/movie');
 
 const linkRegexp = /http[s]?:\/\/(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*,]|(?:%[0-9a-fA-F][0-9a-fA-F]))+\./;
@@ -23,10 +23,10 @@ router.post('/', celebrate({
     nameEN: Joi.string().required(),
   }),
 }), postMovie);
-// router.delete('/:id', celebrate({
-//   body: Joi.object().keys({
-//     id: Joi.string().length(24).hex().required(),
-//   }),
-// }), deleteMovie);
+router.delete('/:id', celebrate({
+  body: Joi.object().keys({
+    // movieId: Joi.string().length(24).hex().required(),
+  }),
+}), deleteMovie);
 
 module.exports = router;
