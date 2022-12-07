@@ -5,7 +5,7 @@ const ForbiddenError = require('../errors/ForbiddenError');
 
 module.exports.getMovies = (req, res, next) => {
   Movie.find({})
-    .then((users) => res.status(200).send({ data: users }))
+    .then((movies) => res.status(200).send(movies))
     .catch((err) => next(err));
 };
 module.exports.postMovie = (req, res, next) => {
@@ -18,6 +18,7 @@ module.exports.postMovie = (req, res, next) => {
     image,
     trailerLink,
     thumbnail,
+    movieId,
     nameRU,
     nameEN,
   } = req.body;
@@ -31,7 +32,7 @@ module.exports.postMovie = (req, res, next) => {
     trailerLink,
     thumbnail,
     owner: req.user._id,
-    movieId: req.user._id,
+    movieId,
     nameRU,
     nameEN,
   })
@@ -45,23 +46,22 @@ module.exports.postMovie = (req, res, next) => {
     });
 };
 module.exports.deleteMovie = (req, res, next) => {
-  // console.log(req.params.id)
-  // console.log(req.user)
+  const { movieId } = req.params;
   const ownerId = req.user._id;
-  Movie.findById(req.params.id)
-    .orFail(new NotFoundError(`Карточка с id '${req.params.id}' не найдена`))
+  Movie.findById(movieId)
+    .orFail(new NotFoundError(`Фильм с id '${movieId}' не найден`))
     .then((movie) => {
       if (movie) {
         if (movie.owner.toString() === ownerId) {
           movie.delete()
-            .then(() => res.status(200).send({ message: `Фильм с id '${req.params.id}' успешно удален` }))
+            .then(() => res.status(200).send({ message: `Фильм с id '${movieId}' успешно удален` }))
             .catch(next);
         } else { throw new ForbiddenError('Фильм пренадлежит другому пользователю'); }
       }
     })
     .catch((err) => {
       if (err.name === 'CastError') {
-        next(new BadRequestError(`'${req.params.id}' не является корректным идентификатором`));
+        next(new BadRequestError(`'${movieId}' не является корректным идентификатором`));
       } else {
         next(err);
       }
