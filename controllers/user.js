@@ -39,7 +39,7 @@ module.exports.login = (req, res, next) => {
     })
     .catch(next);
 };
-module.exports.logout = (req, res, next) => {
+module.exports.signout = (req, res, next) => {
   res.clearCookie('token').send({ message: 'Выход' })
     .catch(next);
 };
