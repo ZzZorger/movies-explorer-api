@@ -9,10 +9,12 @@ const limiter = require('./middlewares/rateLimiter');
 const routes = require('./routes/index');
 const errorHandler = require('./middlewares/errorHandler');
 const { requestLogger, errorLogger } = require('./middlewares/logger');
+const { cors } = require('./middlewares/cors');
 
 const { NODE_ENV, DB_PATH } = process.env;
 const { PORT = 3001 } = process.env;
 const app = express();
+app.use(cors);
 mongoose.connect(NODE_ENV === 'production' ? DB_PATH : 'mongodb://localhost:27017/moviesdb', {
   useNewUrlParser: true,
   useUnifiedTopology: false,
