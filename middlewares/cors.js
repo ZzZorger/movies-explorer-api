@@ -2,7 +2,7 @@ const allowedCors = [
   'http://myseconddomainand.nomoredomains.club',
   'https://myseconddomainand.nomoredomains.club',
   'https://api.nomoreparties.co/beatfilm-movies',
-  'http://localhost:3001',
+  'http://localhost:3000',
 ];
 const DEFAULT_ALLOWED_METHODS = 'GET,HEAD,PUT,PATCH,POST,DELETE';
 
